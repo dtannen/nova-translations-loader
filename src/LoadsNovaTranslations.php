@@ -1,6 +1,6 @@
 <?php
 
-namespace Outl1ne\NovaTranslationsLoader;
+namespace OptimistDigital\NovaTranslationsLoader;
 
 use Exception;
 use Laravel\Nova\Nova;
@@ -30,10 +30,20 @@ trait LoadsNovaTranslations
         $this->translations($packageTranslationsDir, $packageName, $publishTranslations);
     }
 
+    private function getLangPath($pckgName)
+    {
+        $appVersion = app()->version();
+        $isLaravel9 = $appVersion >= '9.0.0';
+
+        return $isLaravel9
+            ? lang_path("vendor/{$pckgName}")
+            : resource_path("lang/vendor/{$pckgName}");
+    }
+
     private function translations($pckgTransDir, $pckgName, $publish)
     {
         if (app()->runningInConsole() && $publish) {
-            $this->publishes([$pckgTransDir => $this->langPath("vendor/{$pckgName}")], 'translations');
+            $this->publishes([$pckgTransDir => $this->getLangPath($pckgName)], 'translations');
             return;
         }
 
@@ -95,13 +105,13 @@ trait LoadsNovaTranslations
         return true;
     }
 
-    private function getTranslationsFile($locale, $from, $packageTranslationsDir, $packageName)
+    private function getTranslationsFile($locale, $from, $packageTranslationsDir, $pckgName)
     {
         if (empty($locale)) return null;
 
         $fileDir = $from === 'local'
             ? $packageTranslationsDir
-            : $this->langPath("vendor/{$packageName}");
+            : $this->getLangPath($pckgName);
 
         $filePath = "$fileDir/{$locale}.json";
 
@@ -112,11 +122,5 @@ trait LoadsNovaTranslations
         $fileContents = json_decode(file_get_contents($filePath), true);
 
         return !empty($fileContents) ? $filePath : null;
-    }
-
-    // Adds Laravel 8 support where 'lang_path' helper does not exist
-    private function langPath($path)
-    {
-        return app()->langPath() . '/' . ltrim($path, '/');
     }
 }

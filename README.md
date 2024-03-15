@@ -1,22 +1,22 @@
 # Nova Translations Loader
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/outl1ne/nova-translations-loader.svg?style=flat-square)](https://packagist.org/packages/outl1ne/nova-translations-loader)
-[![Total Downloads](https://img.shields.io/packagist/dt/outl1ne/nova-translations-loader.svg?style=flat-square)](https://packagist.org/packages/outl1ne/nova-translations-loader)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/optimistdigital/nova-translations-loader.svg?style=flat-square)](https://packagist.org/packages/optimistdigital/nova-translations-loader)
+[![Total Downloads](https://img.shields.io/packagist/dt/optimistdigital/nova-translations-loader.svg?style=flat-square)](https://packagist.org/packages/optimistdigital/nova-translations-loader)
 
 This [Laravel Nova](https://nova.laravel.com/) package helps developers load translations into their packages.
 
 ## Requirements
 
-- `php: >=8.0`
-- `laravel/framework: ^9.0|^10.0`
-- `laravel/nova: ^4.0`
+- `php: >=7.2`
+- `laravel/framework: ^7.0 || ^8.0`
+- `laravel/nova: ^3.0`
 
 ## Installation
 
 Install the package in a Laravel Nova project via Composer:
 
 ```bash
-composer require outl1ne/nova-translations-loader
+composer require optimistdigital/nova-translations-loader
 ```
 
 ## Usage
@@ -24,7 +24,7 @@ composer require outl1ne/nova-translations-loader
 Inside a Laravel's `ServiceProvider`, use the `LoadsNovaTranslations` trait and call `$this->loadTranslations()`:
 
 ```php
-use Outl1ne\NovaTranslationsLoader\LoadsNovaTranslations;
+use OptimistDigital\NovaTranslationsLoader\LoadsNovaTranslations;
 
 class SomePackagesServiceProvider extends ServiceProvider
 {
